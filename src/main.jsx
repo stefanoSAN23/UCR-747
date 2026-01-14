@@ -7,6 +7,9 @@ import Proyectos from "./pages/Proyectos.jsx";
 import Material from "./pages/Material.jsx";
 import Creadores from "./pages/Creadores.jsx";
 import Juegos from "./pages/Juegos.jsx";
+import ProyectoIndividual from "./pages/ProyectoIndividual.jsx";
+import MaterialIndividual from "./pages/MaterialIndividual.jsx";
+import PerfilCreador from "./pages/PerfilCreador.jsx";
 
 import "./index.css";
 
@@ -17,10 +20,12 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "proyectos", element: <Proyectos /> },
+      { path: "proyectos/:id", element: <ProyectoIndividual /> },
       { path: "material", element: <Material /> },
+      { path: "material/:id", element: <MaterialIndividual /> },
       { path: "creadores", element: <Creadores /> },
+      { path: "creadores/:id", element: <PerfilCreador /> },
       { path: "juegos", element: <Juegos /> },
-
     ],
   },
 ]);
