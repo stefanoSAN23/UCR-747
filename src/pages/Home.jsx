@@ -37,8 +37,12 @@ export default function Home() {
   if (loading) {
     return (
       <div className="w-full max-w-6xl mx-auto p-8">
-        <div className="text-center py-12">
-          <p className="text-gray-500">Cargando...</p>
+        <div className="text-center py-16">
+          <div className="inline-block w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-600 font-medium">Cargando contenido...</p>
+          <p className="text-gray-400 text-sm mt-2">
+            Si es la primera visita del día, el servidor puede tardar hasta 60 segundos en despertar.
+          </p>
         </div>
       </div>
     );

@@ -1,6 +1,9 @@
 import API_BASE_URL from '../config/api.js';
 
-// Función helper para hacer peticiones
+// Timeout en ms — Render free tier puede tardar hasta 60s en despertar
+const REQUEST_TIMEOUT = 65000;
+
+// Función helper para hacer peticiones con timeout
 async function request(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
   const config = {
@@ -11,15 +14,23 @@ async function request(endpoint, options = {}) {
     ...options,
   };
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
   try {
-    const response = await fetch(url, config);
-    
+    const response = await fetch(url, { ...config, signal: controller.signal });
+    clearTimeout(timeoutId);
+
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${response.statusText}`);
     }
-    
+
     return await response.json();
   } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('El servidor tardó demasiado en responder. Intentá de nuevo en un momento.');
+    }
     console.error('API Error:', error);
     throw error;
   }
@@ -89,4 +100,3 @@ export const categoriesAPI = {
 export const dashboardAPI = {
   getStats: () => request('/dashboard'),
 };
-
