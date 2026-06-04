@@ -100,3 +100,12 @@ export const categoriesAPI = {
 export const dashboardAPI = {
   getStats: () => request('/dashboard'),
 };
+
+// API de Admin (git push)
+export const adminAPI = {
+  gitPush: (message) =>
+    request('/admin/git-push', {
+      method: 'POST',
+      body: JSON.stringify({ message }),
+    }),
+};
